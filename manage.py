@@ -6,7 +6,10 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_alsodev.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_alsodev.settings.dev')
+    if sys.argv[0] == "test":
+        print("NOTE: Running auto formation")
+        print(os.popen("black .").read())
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

@@ -1,0 +1,31 @@
+version: "3.8"
+
+
+services:
+
+  django_app:
+    build: ./
+    container_name: test_alsodev_container
+    working_dir: /test_alsodev
+    restart: always
+    command: ./commands/run_server_${MODE}.bash
+    volumes:
+      - ./commands:/test_alsodev/commands
+    ports:
+      - "${PORT}:${WSGI_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.1
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+volumes:
+  pg_data: { }
