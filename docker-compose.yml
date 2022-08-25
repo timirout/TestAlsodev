@@ -8,9 +8,12 @@ services:
     container_name: test_alsodev_container
     working_dir: /test_alsodev
     restart: always
-    command: ./commands/run_server_${MODE}.bash
+    command: ./commands/run_server_${MODE}.sh
     volumes:
+      - ./src:/test_alsodev
       - ./commands:/test_alsodev/commands
+      - static_content:/test_alsodev/static
+      - media_content:/test_alsodev/media
     ports:
       - "${PORT}:${WSGI_PORT}"
     env_file:
@@ -29,3 +32,5 @@ services:
 
 volumes:
   pg_data: { }
+  static_content: { }
+  media_content: { }
